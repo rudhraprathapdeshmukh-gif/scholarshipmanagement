@@ -48,14 +48,22 @@ const auth = {
     if (!this.isAuthenticated()) {
       // -------------------------------------------------------------
       // 1. Logged Out (Guest) View:
-      // Show: Home, Browse Scholarships, Eligibility Matcher, About
-      // Show Auth: Login, Register
-      // Hide: Student pages, Admin pages
+      // Show: Home, Browse Scholarships, About
+      // Show Auth: Login, Register (in nav-user-area on desktop,
+      //            in drawer on mobile via nav-drawer-auth li)
       // -------------------------------------------------------------
       navLinksContainer.innerHTML = `
         <li><a class="nav-link" data-view="home" href="#home"><i class="fas fa-home"></i> Home</a></li>
         <li><a class="nav-link" data-view="scholarships" href="#scholarships"><i class="fas fa-graduation-cap"></i> Browse Scholarships</a></li>
         <li><a class="nav-link" data-view="about" href="#about"><i class="fas fa-info-circle"></i> About</a></li>
+        <li class="nav-drawer-auth">
+          <button class="btn btn-secondary btn-sm nav-drawer-btn" onclick="app.showModal('modal-login')">
+            <i class="fas fa-sign-in-alt"></i> Log In
+          </button>
+          <button class="btn btn-primary btn-sm nav-drawer-btn" onclick="app.showModal('modal-register')">
+            <i class="fas fa-user-plus"></i> Student Sign Up
+          </button>
+        </li>
       `;
 
       navUserContainer.innerHTML = `
@@ -69,20 +77,25 @@ const auth = {
     } else if (this.isStudent()) {
       // -------------------------------------------------------------
       // 2. Student Role View:
-      // Show: Browse Scholarships, My Applications, My Profile, Matched Scholarships
-      // Hide: Login, Register, Admin Dashboard, Admin tools
+      // Desktop: user badge link inline in nav-links + empty nav-user
+      // Mobile:  profile link inside drawer, logout button at bottom of drawer
       // -------------------------------------------------------------
       navLinksContainer.innerHTML = `
         <li><a class="nav-link" data-view="home" href="#home"><i class="fas fa-home"></i> Home</a></li>
         <li><a class="nav-link" data-view="scholarships" href="#scholarships"><i class="fas fa-search"></i> Browse Scholarships</a></li>
         <li><a class="nav-link" data-view="student-applications" href="#student-applications"><i class="fas fa-tasks"></i> My Applications</a></li>
         <li><a class="nav-link" data-view="about" href="#about"><i class="fas fa-info-circle"></i> About</a></li>
-        <li>
-          <a class="nav-link user-badge-link" data-view="student-profile" href="#student-profile" style="color: var(--primary); font-weight: 700; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-full); padding: 0.35rem 0.85rem; display: inline-flex; align-items: center; gap: 0.4rem; max-width: 100%; overflow: hidden; text-overflow: ellipsis;">
+        <li class="nav-user-badge-item">
+          <a class="nav-link user-badge-link" data-view="student-profile" href="#student-profile">
             <i class="fas fa-user-graduate"></i>
-            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${app.escapeHtml(this.currentUser.full_name)}</span>
-            <span class="role-pill student" style="flex-shrink: 0;">Student</span>
+            <span class="user-badge-name">${app.escapeHtml(this.currentUser.full_name)}</span>
+            <span class="role-pill student">Student</span>
           </a>
+        </li>
+        <li class="nav-drawer-logout">
+          <button class="btn btn-outline btn-sm nav-drawer-btn" onclick="auth.logout()">
+            <i class="fas fa-sign-out-alt"></i> Log Out
+          </button>
         </li>
       `;
 
@@ -90,13 +103,23 @@ const auth = {
     } else if (this.isAdmin()) {
       // -------------------------------------------------------------
       // 3. Admin Role View:
-      // Show: Admin Dashboard, Manage Scholarships, Review Applications, Student Directory, Audit Logs
-      // Hide: Login, Register, Student-only pages
+      // Desktop: user-badge + logout icon in nav-user-area (right side)
+      // Mobile:  nav-drawer-user block shows name + logout inside drawer
       // -------------------------------------------------------------
       navLinksContainer.innerHTML = `
         <li><a class="nav-link" data-view="admin-dashboard" href="#admin-dashboard"><i class="fas fa-th-large"></i> Dashboard</a></li>
         <li><a class="nav-link" data-view="admin-applications" href="#admin-applications"><i class="fas fa-clipboard-check"></i> Clearance Requests</a></li>
         <li><a class="nav-link" data-view="admin-students" href="#admin-students"><i class="fas fa-users"></i> Students</a></li>
+        <li class="nav-drawer-user">
+          <div class="nav-drawer-user-info">
+            <i class="fas fa-shield-alt"></i>
+            <span>${app.escapeHtml(this.currentUser.full_name)}</span>
+            <span class="role-pill admin">Admin</span>
+          </div>
+          <button class="btn btn-outline btn-sm nav-drawer-btn" onclick="auth.logout()">
+            <i class="fas fa-sign-out-alt"></i> Log Out
+          </button>
+        </li>
       `;
 
       navUserContainer.innerHTML = `
