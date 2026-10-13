@@ -24,6 +24,17 @@ const app = {
       });
     });
 
+    // Close mobile hamburger menu on outside touch/click
+    document.addEventListener('click', (e) => {
+      const navMenu = document.getElementById('nav-links');
+      const toggle = document.getElementById('nav-toggle');
+      if (navMenu && navMenu.classList.contains('open')) {
+        if (!navMenu.contains(e.target) && !toggle.contains(e.target)) {
+          navMenu.classList.remove('open');
+        }
+      }
+    });
+
     console.log('ScholarHub Application Initialized.');
   },
 

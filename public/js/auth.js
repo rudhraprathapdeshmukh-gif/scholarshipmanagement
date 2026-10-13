@@ -78,10 +78,10 @@ const auth = {
         <li><a class="nav-link" data-view="student-applications" href="#student-applications"><i class="fas fa-tasks"></i> My Applications</a></li>
         <li><a class="nav-link" data-view="about" href="#about"><i class="fas fa-info-circle"></i> About</a></li>
         <li>
-          <a class="nav-link user-badge-link" data-view="student-profile" href="#student-profile" style="color: var(--primary); font-weight: 700; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-full); padding: 0.35rem 0.85rem;">
+          <a class="nav-link user-badge-link" data-view="student-profile" href="#student-profile" style="color: var(--primary); font-weight: 700; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-full); padding: 0.35rem 0.85rem; display: inline-flex; align-items: center; gap: 0.4rem; max-width: 100%; overflow: hidden; text-overflow: ellipsis;">
             <i class="fas fa-user-graduate"></i>
-            <span>${app.escapeHtml(this.currentUser.full_name)}</span>
-            <span class="role-pill student">Student</span>
+            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${app.escapeHtml(this.currentUser.full_name)}</span>
+            <span class="role-pill student" style="flex-shrink: 0;">Student</span>
           </a>
         </li>
       `;
