@@ -101,6 +101,15 @@ function loadLocalData() {
  * Falls back cleanly to local persistent storage if MySQL is not available.
  */
 async function initializeDatabase() {
+  // In production cloud environments without external MySQL configured, default directly to embedded mode
+  const isCloudWithoutMySQL = process.env.NODE_ENV === 'production' && (!process.env.DB_HOST || process.env.DB_HOST === 'localhost');
+  if (isCloudWithoutMySQL && DB_MODE === 'auto') {
+    console.log('[DB Connector] Cloud deployment detected without external MySQL host. Running in embedded mode.');
+    activeEngine = 'embedded';
+    loadLocalData();
+    return { engine: 'embedded' };
+  }
+
   if (DB_MODE === 'mysql' || DB_MODE === 'auto') {
     try {
       console.log(`[DB Connector] Connecting to MySQL at ${DB_HOST}:${DB_PORT} as user '${DB_USER}'...`);
@@ -108,7 +117,8 @@ async function initializeDatabase() {
         host: DB_HOST,
         port: DB_PORT,
         user: DB_USER,
-        password: DB_PASSWORD
+        password: DB_PASSWORD,
+        connectTimeout: 3000
       });
 
       await tempConn.query(`CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`);
