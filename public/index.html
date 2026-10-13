@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VNRVJIET ScholarHub – Institutional Scholarship & Bonafide Portal</title>
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Modern Indian EdTech Design System -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ====================================================================
+       Role-Based Navigation Header
+       ==================================================================== -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#home" class="brand" onclick="app.onBrandClick(event)">
+        <div class="brand-icon" style="background: #1e3a8a;"><i class="fas fa-university"></i></div>
+        <span>VNRVJIET <span class="hub" style="color: #ea580c;">ScholarHub</span></span>
+      </a>
+
+      <button class="nav-toggle" id="nav-toggle" onclick="document.getElementById('nav-links').classList.toggle('open')" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Dynamically Rendered by auth.js -->
+      <nav>
+        <ul class="nav-menu" id="nav-links"></ul>
+      </nav>
+
+      <!-- User Profile / Auth Action Buttons -->
+      <div class="nav-user" id="nav-user-area"></div>
+    </div>
+  </header>
+
+  <!-- ====================================================================
+       Main Content Container
+       ==================================================================== -->
+  <main class="main-content">
+
+    <!-- ------------------------------------------------------------------
+         VIEW 1: Landing Page (Home)
+         ------------------------------------------------------------------ -->
+    <section id="view-home" class="view-section active">
+      <!-- Compact Hero Banner -->
+      <div class="hero-section">
+        <div class="hero-content">
+          <span class="hero-badge">
+            <i class="fas fa-award" style="color: #ea580c;"></i> VNRVJIET Autonomous • NAAC 'A++' Grade
+          </span>
+          <h1 class="hero-title">
+            Scholarship & Bonafide Clearance Portal
+          </h1>
+          <p class="hero-description">
+            Request official college clearance and receive your Digitally Signed Bonafide Certificate to apply for external scholarships across TS ePASS, National Scholarship Portal (NSP), Reliance, Tata, and corporate foundations.
+          </p>
+          <div class="hero-cta">
+            <button class="btn btn-primary" onclick="app.switchView('scholarships')">
+              <i class="fas fa-search"></i> Browse External Schemes
+            </button>
+            <button class="btn btn-saffron" onclick="app.showModal('modal-register')">
+              <i class="fas fa-user-plus"></i> Student Registration
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Institutional Workflow Highlights -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fas fa-compass"></i></div>
+          <div class="stat-info">
+            <div class="stat-value">External Schemes</div>
+            <div class="stat-label">NSP, TS ePASS, Corporate</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon saffron"><i class="fas fa-user-check"></i></div>
+          <div class="stat-info">
+            <div class="stat-value">College Clearance</div>
+            <div class="stat-label">Academic & Attendance Review</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="fas fa-file-signature"></i></div>
+          <div class="stat-info">
+            <div class="stat-value">Digital Bonafide</div>
+            <div class="stat-label">Digitally Signed & Endorsed</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple"><i class="fas fa-external-link-alt"></i></div>
+          <div class="stat-info">
+            <div class="stat-value">Apply Externally</div>
+            <div class="stat-label">Direct Portal Submission</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Schemes Preview -->
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Featured Opportunities</h2>
+          <p class="section-desc">Active scholarships open for applications.</p>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="app.switchView('scholarships')">
+          View All <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div id="home-scholarships-preview" class="scholarship-grid"></div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         VIEW 2: Browse Scholarships (Search & Filter)
+         ------------------------------------------------------------------ -->
+    <section id="view-scholarships" class="view-section">
+      <div class="section-header">
+        <div>
+          <h1 class="section-title">Scholarships Directory</h1>
+          <p class="section-desc">Filter by category, academic score, and degree level.</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <div class="pill-group" id="scholarships-tab-group">
+            <button class="pill-btn active" id="tab-sch-all" onclick="scholarships.switchTab('all')">
+              <i class="fas fa-th-large"></i> All Schemes
+            </button>
+            <button class="pill-btn" id="tab-sch-saved" onclick="scholarships.switchTab('saved')">
+              <i class="fas fa-bookmark"></i> Saved <span id="saved-schemes-badge" style="font-size: 0.72rem; background: var(--accent-saffron); color: #fff; padding: 0.05rem 0.4rem; border-radius: 999px; margin-left: 2px;">0</span>
+            </button>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="app.switchView('student-matched')" style="font-weight: 700; color: #1e40af; background: #eff6ff; border-color: #bfdbfe;">
+            <i class="fas fa-magic" style="color: #2563eb;"></i> Eligible For Me
+          </button>
+          <span id="scholarships-count" class="badge badge-active">Loading...</span>
+        </div>
+      </div>
+
+      <!-- Advanced Filter Toolbar -->
+      <div class="filter-toolbar">
+        <div class="filter-row">
+          <div class="filter-search-col">
+            <div class="search-input-wrap">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="filter-search" placeholder="Search by scheme name or authority (e.g. Tata, Reliance, AICTE)..." oninput="scholarships.loadScholarships()">
+            </div>
+          </div>
+
+          <div class="filter-select-col">
+            <select id="filter-category" class="select-filter" onchange="scholarships.loadScholarships()">
+              <option value="All">All Categories</option>
+              <option value="Merit-cum-Means">Merit-cum-Means</option>
+              <option value="Merit-based">Merit-based</option>
+              <option value="Means-based">Means-based</option>
+              <option value="Girls in STEM">Girls in STEM</option>
+              <option value="SC/ST/OBC">SC / ST / OBC</option>
+              <option value="Postgraduate & Research">Postgraduate & Research</option>
+            </select>
+          </div>
+
+          <div class="filter-select-col">
+            <select id="filter-education" class="select-filter" onchange="scholarships.loadScholarships()">
+              <option value="All">All Levels</option>
+              <option value="Undergraduate">Undergraduate (B.Tech)</option>
+              <option value="Postgraduate">Postgraduate (M.Tech)</option>
+            </select>
+          </div>
+
+          <div class="filter-input-col">
+            <input type="number" id="filter-gpa" class="form-input" placeholder="Min CGPA" step="0.1" min="0" max="10.0" oninput="scholarships.loadScholarships()">
+          </div>
+
+          <div>
+            <button class="btn btn-secondary btn-sm" onclick="scholarships.resetFilters()" title="Reset all filters">
+              <i class="fas fa-undo"></i> Reset
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid of Cards -->
+      <div id="scholarships-container" class="scholarship-grid"></div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         VIEW 3: Student Applications & Tracker Dashboard
+         ------------------------------------------------------------------ -->
+    <section id="view-student-applications" class="view-section">
+      <div class="section-header">
+        <div>
+          <h1 class="section-title">My Scholarship Clearance Requests</h1>
+          <p class="section-desc">Track college clearance stages and download your official Digitally Signed Bonafide Certificates once endorsed.</p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+          <button class="btn btn-secondary btn-sm" onclick="app.switchView('student-matched')">
+            <i class="fas fa-magic" style="color: var(--accent-saffron);"></i> Eligible For Me
+          </button>
+          <button class="btn btn-primary btn-sm" onclick="app.switchView('scholarships')">
+            <i class="fas fa-plus"></i> Request Clearance
+          </button>
+        </div>
+      </div>
+
+      <!-- Application Status Metrics -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fas fa-paper-plane"></i></div>
+          <div class="stat-info">
+            <div id="stat-student-total" class="stat-value">0</div>
+            <div class="stat-label">Total Requested</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon saffron"><i class="fas fa-clock"></i></div>
+          <div class="stat-info">
+            <div id="stat-student-submitted" class="stat-value">0</div>
+            <div class="stat-label">Awaiting Scrutiny</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple"><i class="fas fa-spinner"></i></div>
+          <div class="stat-info">
+            <div id="stat-student-review" class="stat-value">0</div>
+            <div class="stat-label">Under Verification</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="fas fa-certificate"></i></div>
+          <div class="stat-info">
+            <div id="stat-student-awarded" class="stat-value">0</div>
+            <div class="stat-label">Bonafides Issued</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Applications Search & Filter Toolbar -->
+      <div class="table-toolbar" style="margin-bottom: 1.25rem;">
+        <div class="search-wrap">
+          <i class="fas fa-search"></i>
+          <input type="text" id="student-app-search" class="form-input" placeholder="Search by scheme title, authority, or ref..." oninput="student.filterApplications()">
+        </div>
+        <div class="pill-group" id="student-apps-pill-group">
+          <button class="pill-btn active" data-status="all" onclick="student.setAppStatusFilter('all', this)">All</button>
+          <button class="pill-btn" data-status="submitted" onclick="student.setAppStatusFilter('submitted', this)">Requested</button>
+          <button class="pill-btn" data-status="under_review" onclick="student.setAppStatusFilter('under_review', this)">Under Review</button>
+          <button class="pill-btn" data-status="awarded" onclick="student.setAppStatusFilter('awarded', this)">Bonafide Issued</button>
+          <button class="pill-btn" data-status="rejected" onclick="student.setAppStatusFilter('rejected', this)">Rejected</button>
+        </div>
+      </div>
+
+      <!-- Applications List Container -->
+      <div id="student-applications-list"></div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         VIEW 4: Student "Eligible For Me" Matcher
+         ------------------------------------------------------------------ -->
+    <section id="view-student-matched" class="view-section">
+      <div class="section-header">
+        <div>
+          <h1 class="section-title">Eligible Schemes For Me</h1>
+          <p class="section-desc">Automated matching based on your CGPA, family income, and category.</p>
+        </div>
+      </div>
+
+      <div id="matched-scholarships-container" class="scholarship-grid"></div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         VIEW 5: Student Profile Management
+         ------------------------------------------------------------------ -->
+    <section id="view-student-profile" class="view-section">
+      <div class="profile-form-container">
+        <div class="section-header">
+          <div>
+            <h1 class="section-title" id="student-profile-heading">Student Profile</h1>
+            <p class="section-desc">Manage your academic credentials, marks, family income, and personal details.</p>
+          </div>
+          <button type="button" class="btn btn-danger btn-sm" onclick="auth.logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+
+        <div id="profile-verification-status"></div>
+
+        <div class="card-container">
+          <form id="form-student-profile" onsubmit="student.saveProfile(event)">
+            
+            <h3 class="form-section-heading">
+              <i class="fas fa-id-card" style="color: var(--primary);"></i> Personal & Contact Details
+            </h3>
+            
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" id="prof-fullname" class="form-input" disabled style="background-color: #f8fafc;">
+                <div class="form-helper">As registered on Aadhaar / 10th marksheet</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" id="prof-email" class="form-input" disabled style="background-color: #f8fafc;">
+                <div class="form-helper">College or personal email for notifications</div>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Mobile Number</label>
+                <input type="text" id="prof-phone" class="form-input" placeholder="+91-98765-43210">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Date of Birth</label>
+                <input type="date" id="prof-dob" class="form-input">
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Gender</label>
+                <select id="prof-gender" class="form-select">
+                  <option value="Prefer not to say">Prefer not to say</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Non-Binary">Non-Binary</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Caste / Reservation Category</label>
+                <select id="prof-category" class="form-select">
+                  <option value="General">General / Open</option>
+                  <option value="OBC">OBC (Other Backward Classes)</option>
+                  <option value="SC">SC (Scheduled Caste)</option>
+                  <option value="ST">ST (Scheduled Tribe)</option>
+                  <option value="Means-based">EWS (Economically Weaker Section)</option>
+                  <option value="Minority">Minority (Muslim, Christian, Sikh, Jain, Buddhist, Parsi)</option>
+                </select>
+              </div>
+            </div>
+
+            <h3 class="form-section-heading">
+              <i class="fas fa-graduation-cap" style="color: var(--accent-saffron);"></i> Academic Records & Annual Income
+            </h3>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Current Education Level *</label>
+                <select id="prof-edu-level" class="form-select" onchange="student.handleEduLevelChange()">
+                  <option value="Undergraduate" selected>Undergraduate (B.Tech)</option>
+                  <option value="Postgraduate">Postgraduate (M.Tech)</option>
+                </select>
+                <div class="form-helper">Degree level at VNRVJIET</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Cumulative CGPA (out of 10) or Percentage (%)</label>
+                <input type="number" id="prof-gpa" class="form-input" step="0.01" min="0" max="100" placeholder="e.g. 8.85 or 88.5">
+                <div class="form-helper">Used by automated DBMS matching rules</div>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Degree & Engineering Branch</label>
+                <select id="prof-course" class="form-select">
+                  <option value="">Select Branch</option>
+                  <option value="B.Tech - Computer Science & Engineering (CSE)">B.Tech - Computer Science & Engineering (CSE)</option>
+                  <option value="B.Tech - CSE (Artificial Intelligence & Machine Learning)">B.Tech - CSE (Artificial Intelligence & Machine Learning)</option>
+                  <option value="B.Tech - CSE (Data Science)">B.Tech - CSE (Data Science)</option>
+                  <option value="B.Tech - CSE (Cyber Security)">B.Tech - CSE (Cyber Security)</option>
+                  <option value="B.Tech - Computer Science & Business Systems (CSBS)">B.Tech - Computer Science & Business Systems (CSBS)</option>
+                  <option value="B.Tech - Information Technology (IT)">B.Tech - Information Technology (IT)</option>
+                  <option value="B.Tech - Electronics & Communication Engineering (ECE)">B.Tech - Electronics & Communication Engineering (ECE)</option>
+                  <option value="B.Tech - Electrical & Electronics Engineering (EEE)">B.Tech - Electrical & Electronics Engineering (EEE)</option>
+                  <option value="B.Tech - Electronics & Instrumentation Engineering (EIE)">B.Tech - Electronics & Instrumentation Engineering (EIE)</option>
+                  <option value="B.Tech - Mechanical Engineering (ME)">B.Tech - Mechanical Engineering (ME)</option>
+                  <option value="B.Tech - Civil Engineering (CE)">B.Tech - Civil Engineering (CE)</option>
+                  <option value="B.Tech - Automobile Engineering (AE)">B.Tech - Automobile Engineering (AE)</option>
+                  <option value="M.Tech - Master of Technology">M.Tech - Master of Technology</option>
+                </select>
+                <div class="form-helper">Approved degree program branches at VNRVJIET</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">College / Institute</label>
+                <input type="text" id="prof-institution" class="form-input" value="VNR Vignana Jyothi Institute of Engineering and Technology, Hyderabad" readonly style="background-color: var(--color-bg-secondary); cursor: not-allowed; color: var(--color-text-secondary);">
+                <div class="form-helper"><i class="fas fa-lock" style="font-size: 0.75rem;"></i> Locked: Official VNRVJIET Institutional Portal</div>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Family Annual Income (₹ INR)</label>
+                <input type="number" id="prof-income" class="form-input" step="10000" min="0" placeholder="e.g. 250000 (2.5 Lakhs)">
+                <div class="form-helper">Required for Need-based, EWS, and Government grant quotas</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">State / Union Territory</label>
+                <select id="prof-state" class="form-select">
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Tamil Nadu">Tamil Nadu</option>
+                  <option value="Telangana">Telangana</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value="Gujarat">Gujarat</option>
+                  <option value="Kerala">Kerala</option>
+                  <option value="West Bengal">West Bengal</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="Madhya Pradesh">Madhya Pradesh</option>
+                  <option value="Andhra Pradesh">Andhra Pradesh</option>
+                  <option value="Punjab">Punjab</option>
+                  <option value="Bihar">Bihar</option>
+                  <option value="Other">Other State / UT</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Permanent Residential Address</label>
+              <textarea id="prof-address" class="form-textarea" rows="2" placeholder="Full postal address with district and PIN Code"></textarea>
+            </div>
+
+            <div class="form-actions" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="auth.logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </button>
+              <button type="submit" id="btn-save-profile" class="btn btn-primary btn-lg">
+                <i class="fas fa-save"></i> Save Profile
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         VIEW 6: Admin Dashboard
+         ------------------------------------------------------------------ -->
+    <section id="view-admin-dashboard" class="view-section">
+      <div class="section-header">
+        <div>
+          <h1 class="section-title">VNRVJIET Scholarship & Bonafide Cell</h1>
+          <p class="section-desc">Review student clearance requests, verify academic credentials, and issue Digitally Signed Bonafides permitting external applications.</p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+          <button class="btn btn-primary btn-sm" onclick="admin.openScholarshipModal()">
+            <i class="fas fa-plus"></i> Add External Scheme
+          </button>
+          <button class="btn btn-danger btn-sm" onclick="auth.logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="stats-grid">
+        <div class="stat-card" style="cursor: pointer;" onclick="app.switchView('admin-applications')">
+          <div class="stat-icon saffron"><i class="fas fa-hourglass-half"></i></div>
+          <div class="stat-info">
+            <div id="admin-stat-pending" class="stat-value">0</div>
+            <div class="stat-label">Pending Clearance</div>
+          </div>
+        </div>
+        <div class="stat-card" style="cursor: pointer;" onclick="app.switchView('admin-students')">
+          <div class="stat-icon blue"><i class="fas fa-user-graduate"></i></div>
+          <div class="stat-info">
+            <div id="admin-stat-students" class="stat-value">0</div>
+            <div class="stat-label">VNRVJIET Students</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple"><i class="fas fa-rupee-sign"></i></div>
+          <div class="stat-info">
+            <div id="admin-stat-disbursed" class="stat-value">₹0</div>
+            <div class="stat-label">Outlay Clearance Tracked</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Operations Bar -->
+      <div style="display: flex; gap: 0.65rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+        <button class="btn btn-primary" onclick="app.switchView('admin-applications')">
+          <i class="fas fa-clipboard-check"></i> Review Clearance Requests
+        </button>
+        <button class="btn btn-secondary" onclick="app.switchView('admin-students')">
+          <i class="fas fa-users"></i> Student Directory
+        </button>
+      </div>
+
+      <!-- Applications Awaiting Review Box (Actionable Front & Center) -->
+      <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.75rem; box-shadow: var(--shadow-xs);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.95rem; flex-wrap: wrap; gap: 0.5rem;">
+          <div>
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--secondary); display: flex; align-items: center; gap: 0.45rem;">
+              <i class="fas fa-inbox" style="color: var(--accent-saffron);"></i> Clearance Requests Awaiting Decision
+            </h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.15rem;">Review student submissions and issue Digitally Signed Bonafides in 1 click</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="admin.loadDashboardPending()"><i class="fas fa-sync"></i> Refresh Queue</button>
+        </div>
+        <div id="admin-dashboard-pending-list"></div>
+      </div>
+    </section>
+
+
+
+    <!-- ------------------------------------------------------------------
+         VIEW 8: Admin Review Applications
+         ------------------------------------------------------------------ -->
+    <section id="view-admin-applications" class="view-section">
+      <div class="section-header">
+        <div>
+          <h1 class="section-title">Student Clearance Requests</h1>
+          <p class="section-desc">Review student clearance requests, inspect institutional credentials, and issue Digitally Signed Bonafides permitting external applications.</p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); white-space: nowrap;">Filter Status:</label>
+          <select id="admin-filter-app-status" class="form-select" style="width: auto; padding: 0.35rem 0.65rem; font-size: 0.84rem;" onchange="admin.loadApplications()">
+            <option value="all">All Clearance Requests</option>
+            <option value="submitted">Submitted (New)</option>
+            <option value="under_review">Under Review</option>
+            <option value="verified">Verified</option>
+            <option value="awarded">Permitted (Bonafide Issued)</option>
+            <option value="rejected">Rejected</option>
+          </select>
+          <button class="btn btn-outline-secondary btn-sm" onclick="admin.exportApplicationsCSV()" title="Export clearance records to CSV">
+            <i class="fas fa-file-csv"></i> Export CSV
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Student Details</th>
+              <th>External Scheme</th>
+              <th>Score & Income</th>
+              <th>Requested Date</th>
+              <th>Status</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-applications-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         VIEW 9: Admin Student Directory
+         ------------------------------------------------------------------ -->
+    <section id="view-admin-students" class="view-section">
+      <div class="section-header">
+        <div>
+          <h1 class="section-title">Student Directory</h1>
+          <p class="section-desc">Inspect registered students, verify qualifications, and manage verification badges.</p>
+        </div>
+      </div>
+
+      <!-- Student Directory Live Filter & Export Toolbar -->
+      <div class="table-toolbar">
+        <div class="search-wrap">
+          <i class="fas fa-search"></i>
+          <input type="text" id="admin-student-search" class="form-input" placeholder="Search by name, roll no, email, course..." oninput="admin.filterStudents()">
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <select id="admin-student-filter-status" class="form-select" style="width: auto; font-size: 0.84rem; padding: 0.4rem 0.75rem;" onchange="admin.filterStudents()">
+            <option value="all">All Statuses</option>
+            <option value="verified">Verified Only</option>
+            <option value="unverified">Unverified Only</option>
+          </select>
+          <button class="btn btn-outline-secondary btn-sm" onclick="admin.exportStudentsCSV()" title="Export Student Directory as CSV">
+            <i class="fas fa-file-csv"></i> Export CSV
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Student & Contact</th>
+              <th>Institution & Degree</th>
+              <th>CGPA & Family Income</th>
+              <th>Verification Status</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="admin-students-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         VIEW 10: Admin System Logs
+         ------------------------------------------------------------------ -->
+    <section id="view-admin-logs" class="view-section">
+      <div class="section-header">
+        <div>
+          <h1 class="section-title">Database Audit Trail</h1>
+          <p class="section-desc">Real-time log of security events, status transitions, and portal operations.</p>
+        </div>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;">
+        <ul id="admin-audit-logs-full" style="list-style: none;"></ul>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------
+         VIEW 11: About VNRVJIET ScholarHub
+         ------------------------------------------------------------------ -->
+    <section id="view-about" class="view-section">
+      <div class="profile-form-container" style="max-width: 900px;">
+        <div class="card-container" style="padding: 2rem;">
+          
+          <!-- Header Banner -->
+          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border-color); flex-wrap: wrap;">
+            <div style="width: 56px; height: 56px; background: #1e3a8a; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; box-shadow: var(--shadow-sm);">
+              <i class="fas fa-university"></i>
+            </div>
+            <div>
+              <span class="badge" style="background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; font-size: 0.75rem; margin-bottom: 0.35rem;">
+                <i class="fas fa-shield-alt"></i> Official Institutional Portal
+              </span>
+              <h1 class="section-title" style="margin-bottom: 0.2rem; font-size: 1.45rem;">
+                About VNRVJIET ScholarHub
+              </h1>
+              <p class="section-desc">
+                Institutional Scholarship Clearance & Digitally Signed Bonafide Portal
+              </p>
+            </div>
+          </div>
+
+          <!-- Section 1: Overview -->
+          <div style="background: #f8fafc; border: 1px solid var(--border-color); border-left: 4px solid #1e3a8a; border-radius: var(--radius-sm); padding: 1.25rem; margin-bottom: 1.75rem; line-height: 1.7; font-size: 0.92rem; color: #334155;">
+            <strong style="color: var(--secondary); font-size: 1rem; display: block; margin-bottom: 0.4rem;">
+              <i class="fas fa-info-circle" style="color: var(--primary);"></i> What is VNRVJIET ScholarHub?
+            </strong>
+            <p>
+              <strong>VNRVJIET ScholarHub</strong> is the official digital scholarship gateway developed for students and administrators of 
+              <strong>Vallurupalli Nageswara Rao Vignana Jyothi Institute of Engineering and Technology (VNRVJIET)</strong>, Hyderabad. 
+              The portal bridges the gap between students and external financial grant opportunities across state, national, and corporate domains.
+            </p>
+            <p style="margin-top: 0.65rem;">
+              The platform enables students to discover verified external scholarships (such as TS ePASS, National Scholarship Portal - NSP, Reliance Foundation, Tata Trusts, and AICTE Pragati), verify their academic eligibility, and request official college permission. Upon administrative scrutiny, the college issues an authentic, 
+              <strong>Digitally Signed Bonafide Certificate</strong> that students can directly attach to their external scholarship applications.
+            </p>
+          </div>
+
+          <!-- Section 2: Core Purpose & Features -->
+          <h3 class="form-section-heading" style="margin-top: 0;">
+            <i class="fas fa-star" style="color: var(--accent-saffron);"></i> Key Portal Capabilities
+          </h3>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1.75rem;">
+            <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.15rem; box-shadow: var(--shadow-xs);">
+              <div style="width: 38px; height: 38px; background: #e0f2fe; color: #0284c7; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: 0.75rem;">
+                <i class="fas fa-compass"></i>
+              </div>
+              <h4 style="font-size: 0.98rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.35rem;">Centralized Scheme Directory</h4>
+              <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.6;">
+                Brings central, state, and corporate CSR scholarship opportunities into one curated window with real-time deadlines and award amounts.
+              </p>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.15rem; box-shadow: var(--shadow-xs);">
+              <div style="width: 38px; height: 38px; background: #fef3c7; color: #d97706; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: 0.75rem;">
+                <i class="fas fa-check-double"></i>
+              </div>
+              <h4 style="font-size: 0.98rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.35rem;">Automated Eligibility Check</h4>
+              <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.6;">
+                Instantly analyzes CGPA, family annual income, degree course, and category against official scheme cutoffs so students know exactly where they qualify.
+              </p>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.15rem; box-shadow: var(--shadow-xs);">
+              <div style="width: 38px; height: 38px; background: #dcfce7; color: #16a34a; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: 0.75rem;">
+                <i class="fas fa-file-signature"></i>
+              </div>
+              <h4 style="font-size: 0.98rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.35rem;">Digitally Signed Bonafides</h4>
+              <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.6;">
+                Eliminates physical paperwork by generating tamper-evident institutional certificates complete with college seal, digital signature, and verification hash.
+              </p>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.15rem; box-shadow: var(--shadow-xs);">
+              <div style="width: 38px; height: 38px; background: #f3e8ff; color: #9333ea; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: 0.75rem;">
+                <i class="fas fa-tasks"></i>
+              </div>
+              <h4 style="font-size: 0.98rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.35rem;">Transparent Status Pipeline</h4>
+              <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.6;">
+                Live 4-stage tracking from clearance submission to institutional endorsement, keeping students informed every step of the way.
+              </p>
+            </div>
+          </div>
+
+          <!-- Section 3: How the Site Works -->
+          <h3 class="form-section-heading">
+            <i class="fas fa-road" style="color: var(--primary);"></i> How It Works for Students
+          </h3>
+
+          <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.75rem;">
+            <div style="display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #1e3a8a; color: #fff; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+              <div>
+                <strong style="color: var(--secondary); font-size: 0.92rem;">Explore External Scholarships</strong>
+                <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 0.15rem; line-height: 1.5;">
+                  Browse opportunities from TS ePASS, National Scholarship Portal (NSP), Reliance Foundation, Tata Trusts, and other government and corporate sponsors.
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #1e3a8a; color: #fff; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+              <div>
+                <strong style="color: var(--secondary); font-size: 0.92rem;">Request Institutional Clearance & Bonafide</strong>
+                <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 0.15rem; line-height: 1.5;">
+                  Select your scheme and submit a request with your official 10-digit VNRVJIET Roll Number (e.g. 23071A05XX) and branch details.
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #1e3a8a; color: #fff; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+              <div>
+                <strong style="color: var(--secondary); font-size: 0.92rem;">College Administrative Verification</strong>
+                <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 0.15rem; line-height: 1.5;">
+                  The VNRVJIET Scholarship Cell verifies your academic enrollment, attendance, and conduct records online.
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #16a34a; color: #fff; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+              <div>
+                <strong style="color: #15803d; font-size: 0.92rem;">Download Digitally Signed Bonafide & Apply Externally</strong>
+                <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 0.15rem; line-height: 1.5;">
+                  Download or print your official Digitally Signed Bonafide Certificate and upload it to the external sponsoring authority's portal to complete your grant application.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4: Institution Information -->
+          <h3 class="form-section-heading">
+            <i class="fas fa-landmark" style="color: var(--secondary);"></i> Institutional Details & Contact
+          </h3>
+
+          <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.25rem; font-size: 0.88rem; line-height: 1.7; color: #334155; margin-bottom: 1.75rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem;">
+              <div>
+                <strong style="color: var(--secondary); display: block; margin-bottom: 0.25rem;">Institution:</strong>
+                <div>Vallurupalli Nageswara Rao Vignana Jyothi Institute of Engineering and Technology (VNRVJIET)</div>
+                <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">
+                  An Autonomous Institute • Approved by AICTE • Affiliated to JNTUH • Accredited with NAAC 'A++' Grade
+                </div>
+              </div>
+
+              <div>
+                <strong style="color: var(--secondary); display: block; margin-bottom: 0.25rem;">Scholarship Cell Helpdesk:</strong>
+                <div><i class="fas fa-map-marker-alt" style="color: var(--danger); margin-right: 0.35rem;"></i> Vignana Jyothi Nagar, Bachupally, Nizampet (S.O), Hyderabad – 500090</div>
+                <div><i class="fas fa-envelope" style="color: var(--primary); margin-right: 0.35rem;"></i> scholarships@vnrvjiet.ac.in</div>
+                <div><i class="fas fa-phone" style="color: var(--success); margin-right: 0.35rem;"></i> 040-23042758 / 59 / 60</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions Footer -->
+          <div style="display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="app.onBrandClick(event)">
+              <i class="fas fa-arrow-left"></i> Back to Dashboard / Home
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       MODAL DIALOGS
+       ==================================================================== -->
+
+  <!-- Modal 1: User Login -->
+  <div id="modal-login" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-sign-in-alt"></i> Account Sign In</h3>
+        <button class="modal-close" onclick="app.closeModal('modal-login')">&times;</button>
+      </div>
+      <form id="form-login" onsubmit="auth.handleLogin(event)">
+        <div class="modal-body">
+          
+          <!-- Demo Credentials Banner -->
+          <div class="demo-banner">
+            <div class="demo-banner-text">
+              <strong><i class="fas fa-bolt"></i> Quick Demo Logins:</strong> Click to fill test credentials.
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="auth.fillDemoCredentials('student')">
+                <i class="fas fa-user-graduate"></i> Student (Sai Praneeth)
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="auth.fillDemoCredentials('admin')">
+                <i class="fas fa-shield-alt"></i> Admin (Scholarship Cell)
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address or Name</label>
+            <input type="text" id="login-email" class="form-input" required placeholder="student@vnrvjiet.in or Sai Praneeth">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="login-password" class="form-input" required placeholder="••••••••">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="app.closeModal('modal-login')">Cancel</button>
+          <button type="submit" id="btn-login-submit" class="btn btn-primary">Log In</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Student Registration -->
+  <div id="modal-register" class="modal-overlay">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-user-plus"></i> Student Portal Registration</h3>
+        <button class="modal-close" onclick="app.closeModal('modal-register')">&times;</button>
+      </div>
+      <form id="form-register" onsubmit="auth.handleRegister(event)">
+        <div class="modal-body">
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+            Create your National Scholar account to automatically calculate eligibility across central, state, and corporate schemes.
+          </p>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Full Legal Name *</label>
+              <input type="text" id="reg-fullname" class="form-input" required placeholder="e.g. Aarav Sharma">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email Address *</label>
+              <input type="email" id="reg-email" class="form-input" required placeholder="e.g. aarav@college.ac.in">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Password (min 6 characters) *</label>
+              <input type="password" id="reg-password" class="form-input" minlength="6" required placeholder="••••••••">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Mobile Number</label>
+              <input type="text" id="reg-phone" class="form-input" placeholder="+91-98765-43210">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Current Education Level *</label>
+              <select id="reg-edu-level" class="form-select" onchange="auth.handleEduLevelChange()" required>
+                <option value="Undergraduate" selected>Undergraduate (B.Tech)</option>
+                <option value="Postgraduate">Postgraduate (M.Tech)</option>
+              </select>
+              <div class="form-helper" style="font-size: 0.75rem;">VNRVJIET Degree Level</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Cumulative CGPA (out of 10) or %</label>
+              <input type="number" id="reg-gpa" class="form-input" step="0.01" min="0" max="100" placeholder="e.g. 8.75">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Degree & Engineering Branch</label>
+              <select id="reg-course" class="form-select" required>
+                <option value="">Select Branch</option>
+                <option value="B.Tech - Computer Science & Engineering (CSE)">B.Tech - Computer Science & Engineering (CSE)</option>
+                <option value="B.Tech - CSE (Artificial Intelligence & Machine Learning)">B.Tech - CSE (Artificial Intelligence & Machine Learning)</option>
+                <option value="B.Tech - CSE (Data Science)">B.Tech - CSE (Data Science)</option>
+                <option value="B.Tech - CSE (Cyber Security)">B.Tech - CSE (Cyber Security)</option>
+                <option value="B.Tech - Computer Science & Business Systems (CSBS)">B.Tech - Computer Science & Business Systems (CSBS)</option>
+                <option value="B.Tech - Information Technology (IT)">B.Tech - Information Technology (IT)</option>
+                <option value="B.Tech - Electronics & Communication Engineering (ECE)">B.Tech - Electronics & Communication Engineering (ECE)</option>
+                <option value="B.Tech - Electrical & Electronics Engineering (EEE)">B.Tech - Electrical & Electronics Engineering (EEE)</option>
+                <option value="B.Tech - Electronics & Instrumentation Engineering (EIE)">B.Tech - Electronics & Instrumentation Engineering (EIE)</option>
+                <option value="B.Tech - Mechanical Engineering (ME)">B.Tech - Mechanical Engineering (ME)</option>
+                <option value="B.Tech - Civil Engineering (CE)">B.Tech - Civil Engineering (CE)</option>
+                <option value="B.Tech - Automobile Engineering (AE)">B.Tech - Automobile Engineering (AE)</option>
+                <option value="M.Tech - Master of Technology">M.Tech - Master of Technology</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">College / Institute</label>
+              <input type="text" id="reg-institution" class="form-input" value="VNR Vignana Jyothi Institute of Engineering and Technology, Hyderabad" readonly style="background-color: var(--color-bg-secondary); cursor: not-allowed; color: var(--color-text-secondary);">
+              <div class="form-helper" style="font-size: 0.75rem;"><i class="fas fa-lock"></i> VNRVJIET Students Only</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Annual Family Income (₹ INR)</label>
+            <input type="number" id="reg-income" class="form-input" step="10000" min="0" placeholder="e.g. 250000 (2.5 Lakhs)">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="app.closeModal('modal-register')">Cancel</button>
+          <button type="submit" id="btn-register-submit" class="btn btn-primary">Create Student Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Scholarship Details & Eligibility Checklist -->
+  <div id="modal-details" class="modal-overlay">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3 id="details-modal-title" class="modal-title">Scheme Guidelines</h3>
+        <button class="modal-close" onclick="app.closeModal('modal-details')">&times;</button>
+      </div>
+      <div id="details-modal-body" class="modal-body"></div>
+      <div id="details-modal-footer" class="modal-footer"></div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Request College Clearance & Bonafide Form -->
+  <div id="modal-apply" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-file-signature"></i> Request College Clearance & Bonafide</h3>
+        <button class="modal-close" onclick="app.closeModal('modal-apply')">&times;</button>
+      </div>
+      <form id="form-apply" onsubmit="scholarships.submitApplication(event)">
+        <div class="modal-body">
+          <input type="hidden" id="apply-scholarship-id">
+
+          <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.85rem; margin-bottom: 1.15rem;">
+            <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">EXTERNAL SCHOLARSHIP SCHEME:</div>
+            <strong id="apply-scholarship-title" style="color: var(--secondary); font-size: 1.05rem; display: block; margin-top: 0.2rem;"></strong>
+            <p style="font-size: 0.82rem; color: #475569; margin-top: 0.35rem;">
+              VNRVJIET Scholarship Cell will review your academic standing and issue an official Digitally Signed Bonafide Certificate to submit on the external portal.
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Student Roll No / Hall Ticket No *</label>
+            <input type="text" id="apply-ref-num" class="form-input" required placeholder="e.g. 23071A0542">
+            <div class="form-helper">Your official 10-digit VNRVJIET roll number</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Academic Details & External Application Purpose</label>
+            <textarea id="apply-notes" class="form-textarea" rows="3" placeholder="Mention Branch (e.g. CSE), Year/Semester, and external portal application reference (e.g. TS ePASS / NSP)..."></textarea>
+          </div>
+
+          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius-sm); padding: 0.75rem; font-size: 0.8rem; color: #166534; display: flex; align-items: flex-start; gap: 0.5rem;">
+            <i class="fas fa-shield-check" style="margin-top: 2px;"></i>
+            <span>Upon approval by the college administrator, you can immediately download your Digitally Signed Bonafide Certificate from your dashboard.</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="app.closeModal('modal-apply')">Cancel</button>
+          <button type="submit" id="btn-apply-submit" class="btn btn-primary">
+            <i class="fas fa-file-signature"></i> Request Bonafide & Clearance
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+  <!-- Modal 6: Admin Review Clearance Request -->
+  <div id="modal-review-application" class="modal-overlay">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="fas fa-clipboard-check"></i> Review Clearance Request <span id="review-app-id"></span></h3>
+        <button class="modal-close" onclick="app.closeModal('modal-review-application')">&times;</button>
+      </div>
+      <form id="form-review-app" onsubmit="admin.submitReview(event)">
+        <div class="modal-body">
+          
+          <div style="background:#f8fafc; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:1rem; margin-bottom:1.25rem;">
+            <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700;">APPLICANT:</div>
+            <div style="font-size:1.1rem; font-weight:700; color:var(--secondary);" id="review-student-name"></div>
+            <div style="font-size:0.88rem; color:var(--text-muted);" id="review-student-details"></div>
+            <div style="font-size:0.85rem; color:#2563eb; margin-top:0.35rem;" id="review-student-academics"></div>
+          </div>
+
+          <div style="margin-bottom:1rem;">
+            <span style="font-size:0.85rem; color:var(--text-muted); display:block;">EXTERNAL SCHOLARSHIP:</span>
+            <strong style="font-size:1.05rem; color:var(--secondary);" id="review-scholarship-title"></strong>
+          </div>
+
+          <div style="margin-bottom:1.25rem;">
+            <span style="font-size:0.85rem; color:var(--text-muted); display:block;">STUDENT REQUEST DETAILS:</span>
+            <p style="background:#fff; border:1px solid var(--border-color); padding:0.75rem; border-radius:var(--radius-sm); font-size:0.9rem;" id="review-student-notes"></p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Decision / Clearance Status</label>
+            <select id="review-status-select" class="form-select" required>
+              <option value="awarded">Permit & Issue Digitally Signed Bonafide</option>
+              <option value="under_review">Under Review (Verifying Records)</option>
+              <option value="verified">Verified (Credentials Approved)</option>
+              <option value="submitted">Pending Review</option>
+              <option value="rejected">Reject Request</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Remarks for Student & Bonafide Certificate</label>
+            <textarea id="review-feedback-input" class="form-textarea" rows="3" placeholder="Enter reason or instructions for the student..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="app.closeModal('modal-review-application')">Cancel</button>
+          <button type="submit" id="btn-submit-review" class="btn btn-primary">Save Decision & Issue</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 7: Digitally Signed Bonafide Certificate Viewer & Printable View -->
+  <div id="modal-bonafide-certificate" class="modal-overlay">
+    <div class="modal-box modal-lg" style="max-width: 840px;">
+      <div class="modal-header" style="background: #1e3a8a; color: #ffffff;">
+        <h3 class="modal-title" style="color: #ffffff;">
+          <i class="fas fa-file-signature" style="color: #93c5fd;"></i> VNRVJIET Digitally Signed Bonafide Certificate
+        </h3>
+        <button class="modal-close" style="color: #ffffff;" onclick="app.closeModal('modal-bonafide-certificate')">&times;</button>
+      </div>
+      <div class="modal-body" style="background: #f1f5f9; padding: 1.5rem;">
+        
+        <!-- Official Printable Certificate Sheet -->
+        <div id="bonafide-sheet" class="bonafide-sheet">
+          <!-- Institutional Header -->
+          <div class="bonafide-header">
+            <div class="bonafide-emblem">
+              <i class="fas fa-university"></i>
+            </div>
+            <div class="bonafide-title-block">
+              <h2>VALLURUPALLI NAGESWARA RAO VIGNANA JYOTHI INSTITUTE OF ENGINEERING AND TECHNOLOGY</h2>
+              <div class="bonafide-subtitle">
+                An Autonomous Institute, Approved by AICTE, Affiliated to JNTUH, Accredited by NAAC with 'A++' Grade
+              </div>
+              <div class="bonafide-address">
+                Vignana Jyothi Nagar, Pragathi Nagar, Nizampet (S.O), Bachupally, Hyderabad, Telangana – 500090
+              </div>
+              <div class="bonafide-web">
+                Website: www.vnrvjiet.ac.in | Email: scholarships@vnrvjiet.ac.in | Ph: 040-23042758
+              </div>
+            </div>
+          </div>
+
+          <div class="bonafide-divider"></div>
+
+          <!-- Reference & Date Line -->
+          <div class="bonafide-meta-row">
+            <div><strong>Ref. No:</strong> <span id="bonafide-ref-no">VNRVJIET/SCH-BONAFIDE/2026/000</span></div>
+            <div><strong>Date of Issue:</strong> <span id="bonafide-date">11-Oct-2026</span></div>
+          </div>
+
+          <!-- Certificate Heading -->
+          <div class="bonafide-doc-title">
+            <h3>BONAFIDE & INSTITUTIONAL CLEARANCE CERTIFICATE</h3>
+            <p>(Issued for External Scholarship Application)</p>
+          </div>
+
+          <!-- Body Text -->
+          <div class="bonafide-body-text">
+            <p>
+              This is to certify that <strong id="bonafide-student-name">Student Name</strong>, bearing 
+              Roll / Hall Ticket No: <strong id="bonafide-roll-no">23071A0542</strong>, is a bonafide student of 
+              <strong>Vallurupalli Nageswara Rao Vignana Jyothi Institute of Engineering and Technology (VNRVJIET)</strong>, 
+              currently pursuing <strong id="bonafide-course-name">B.Tech in Computer Science & Engineering</strong> 
+              during the Academic Year <strong>2026–2027</strong>.
+            </p>
+            <p>
+              As per college academic and attendance records, the student maintains good conduct, satisfactory academic progress 
+              (Cumulative Score: <strong id="bonafide-cgpa">8.85 / 10</strong>), and has fulfilled all institutional enrollment requirements.
+            </p>
+            <p>
+              The Academic Section & Scholarship Cell of VNRVJIET has verified the candidate's institutional standing and hereby 
+              <strong>GRANTS OFFICIAL INSTITUTIONAL CLEARANCE & ENDORSEMENT</strong> permitting the student to apply for the external scholarship scheme:
+            </p>
+
+            <div class="bonafide-scheme-highlight">
+              <div>
+                <span class="label">External Scheme:</span>
+                <strong id="bonafide-scheme-name">Reliance Foundation Undergraduate Scholarship</strong>
+              </div>
+              <div>
+                <span class="label">Sponsoring Agency / Portal:</span>
+                <strong id="bonafide-provider-name">Reliance Foundation / National Portal</strong>
+              </div>
+              <div>
+                <span class="label">Grant Outlay:</span>
+                <strong id="bonafide-award-amount" style="color: #15803d;">₹2,00,000</strong>
+              </div>
+            </div>
+
+            <p style="margin-top: 0.85rem; font-size: 0.86rem; color: #475569;">
+              The student is permitted to upload and submit this certificate to the external scholarship awarding portal. The institution will facilitate online verification upon request from the sponsoring authority.
+            </p>
+          </div>
+
+          <!-- Signatures & Official Seal Row -->
+          <div class="bonafide-footer-row">
+            <div class="bonafide-seal-box">
+              <div class="seal-circle">
+                <i class="fas fa-stamp" style="font-size: 1.25rem; color: #1e3a8a; margin-bottom: 2px;"></i>
+                <span>OFFICIAL SEAL<br>VNRVJIET<br>HYDERABAD</span>
+              </div>
+              <div class="qr-mockup">
+                <i class="fas fa-qrcode fa-2x"></i>
+                <span>vnrvjiet.ac.in/verify</span>
+              </div>
+            </div>
+
+            <div class="bonafide-digisign-box">
+              <div class="digisign-badge">
+                <i class="fas fa-check-circle" style="color: #16a34a;"></i>
+                <span>DIGITALLY SIGNED & VERIFIED</span>
+              </div>
+              <div class="digisign-signatory">
+                <strong>Officer In-Charge & Dean</strong>
+                <div>Scholarship & Academic Section</div>
+                <div style="font-weight: 600; color: #1e3a8a;">VNRVJIET, Hyderabad</div>
+              </div>
+              <div class="digisign-hash" id="bonafide-hash">
+                SHA-256: 7F8C4129B139A044E138F
+              </div>
+              <div class="digisign-timestamp" id="bonafide-timestamp">
+                Digitally Endorsed: 11-Oct-2026 IST
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="app.closeModal('modal-bonafide-certificate')">Close</button>
+        <button type="button" class="btn btn-primary" onclick="window.print()">
+          <i class="fas fa-print"></i> Print / Save as PDF
+        </button>
+        <a id="bonafide-external-portal-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-success">
+          <i class="fas fa-external-link-alt"></i> Proceed to External Portal
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Alert Notifications Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ====================================================================
+       Page Footer
+       ==================================================================== -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <strong>VNRVJIET ScholarHub</strong> – Institutional Scholarship & Bonafide Portal
+        <p style="margin-top: 0.2rem;">Vallurupalli Nageswara Rao Vignana Jyothi Institute of Engineering & Technology, Hyderabad</p>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <span>Autonomous Institute • NAAC 'A++' • AICTE Approved • Affiliated to JNTUH</span>
+        <a href="#about" onclick="app.switchView('about')" style="color: var(--primary); text-decoration: underline; font-weight: 600;">
+          <i class="fas fa-info-circle"></i> About This Site
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/scholarships.js"></script>
+  <script src="js/student.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
