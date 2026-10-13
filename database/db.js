@@ -60,13 +60,17 @@ function saveLocalData() {
   }
 }
 
-function loadLocalData() {
+function loadLocalData(forceReload = false) {
+  if (memoryStore && !forceReload) {
+    return;
+  }
+
   if (fs.existsSync(LOCAL_DATA_FILE)) {
     try {
       const content = fs.readFileSync(LOCAL_DATA_FILE, 'utf8');
       memoryStore = JSON.parse(content);
       
-      // Ensure VNRVJIET users exist
+      // Ensure VNRVJIET default users exist
       const defaultData = getDefaultSeedData();
       defaultData.users.forEach(defUser => {
         const found = memoryStore.users.find(u => u.email.toLowerCase() === defUser.email.toLowerCase());

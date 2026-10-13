@@ -107,18 +107,18 @@ CREATE TABLE activity_logs (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- Seed Data (Indian Context)
+-- Seed Data (VNRVJIET Context)
 -- Password for all demo accounts: 'Admin@123' and 'Student@123'
 INSERT INTO users (id, full_name, email, password_hash, role, phone) VALUES
-(1, 'National Portal Administrator', 'admin@scholarhub.in', '$2a$10$7R9Pqv0GzB6L0R7F.02fze8iQ1c8FhJ7T7v4d3H6E5Q0Y.8aL3fXW', 'admin', '+91-98110-12345'),
-(2, 'Aarav Sharma', 'aarav.sharma@iitb.ac.in', '$2a$10$4nC0Gq1qZk4l8S2F4w3ehe8L7v6X8Z1Q7u2k5I9O8F4E6Q1Y3p2aW', 'student', '+91-98201-44552'),
-(3, 'Priya Patel', 'priya.patel@vjti.ac.in', '$2a$10$4nC0Gq1qZk4l8S2F4w3ehe8L7v6X8Z1Q7u2k5I9O8F4E6Q1Y3p2aW', 'student', '+91-99302-88771'),
-(4, 'Rohan Verma', 'rohan.verma@delhi.ac.in', '$2a$10$4nC0Gq1qZk4l8S2F4w3ehe8L7v6X8Z1Q7u2k5I9O8F4E6Q1Y3p2aW', 'student', '+91-97115-33442');
+(1, 'VNRVJIET Scholarship Cell Officer', 'admin@vnrvjiet.ac.in', '$2a$10$7R9Pqv0GzB6L0R7F.02fze8iQ1c8FhJ7T7v4d3H6E5Q0Y.8aL3fXW', 'admin', '+91-98490-12345'),
+(2, 'K. Sai Praneeth', 'student@vnrvjiet.in', '$2a$10$4nC0Gq1qZk4l8S2F4w3ehe8L7v6X8Z1Q7u2k5I9O8F4E6Q1Y3p2aW', 'student', '+91-98480-44552'),
+(3, 'M. Ananya Reddy', 'ananya.reddy@vnrvjiet.in', '$2a$10$4nC0Gq1qZk4l8S2F4w3ehe8L7v6X8Z1Q7u2k5I9O8F4E6Q1Y3p2aW', 'student', '+91-99492-88771'),
+(4, 'B. Rahul Varma', 'rahul.varma@vnrvjiet.in', '$2a$10$4nC0Gq1qZk4l8S2F4w3ehe8L7v6X8Z1Q7u2k5I9O8F4E6Q1Y3p2aW', 'student', '+91-97015-33442');
 
 INSERT INTO student_profiles (user_id, date_of_birth, gender, category, family_annual_income, education_level, course_name, institution_name, gpa_or_percentage, state, address, is_verified) VALUES
-(2, '2004-05-14', 'Male', 'General', 450000.00, 'Undergraduate', 'B.Tech in Computer Science & Engineering', 'IIT Bombay, Powai', 8.85, 'Maharashtra', 'B-402, Green Meadows, Powai, Mumbai - 400076', TRUE),
-(3, '2003-11-20', 'Female', 'OBC', 240000.00, 'Undergraduate', 'B.Tech in Information Technology', 'VJTI, Matunga, Mumbai', 9.20, 'Maharashtra', 'Plot 12, Tilak Nagar, Pune - 411002', TRUE),
-(4, '2004-02-10', 'Male', 'SC', 180000.00, 'Undergraduate', 'B.Sc in Computer Science', 'St. Stephen\'s College, Delhi University', 7.80, 'Delhi', 'Sector 4, Rohini, New Delhi - 110085', FALSE);
+(2, '2004-05-14', 'Male', 'General', 450000.00, 'Undergraduate', 'B.Tech - Computer Science & Engineering (CSE)', 'VNR Vignana Jyothi Institute of Engineering and Technology, Hyderabad', 8.85, 'Telangana', 'Plot 45, Nizampet Road, Kukatpally, Hyderabad - 500072', TRUE),
+(3, '2003-11-20', 'Female', 'OBC', 240000.00, 'Undergraduate', 'B.Tech - Electronics & Communication Engineering (ECE)', 'VNR Vignana Jyothi Institute of Engineering and Technology, Hyderabad', 9.20, 'Telangana', 'H.No 3-5-112, Pragathi Nagar, Bachupally, Hyderabad - 500090', TRUE),
+(4, '2004-02-10', 'Male', 'SC', 180000.00, 'Undergraduate', 'B.Tech - Information Technology (IT)', 'VNR Vignana Jyothi Institute of Engineering and Technology, Hyderabad', 7.80, 'Telangana', 'Miyapur Allwyn X Roads, Hyderabad - 500049', FALSE);
 
 INSERT INTO scholarships (id, title, provider_name, description, category, min_gpa, max_income, education_level, award_amount, currency, deadline, application_url, slots_available, status, created_by) VALUES
 (1, 'Reliance Foundation Undergraduate Scholarship 2026-27', 'Reliance Foundation', 'Merit-cum-means financial assistance for undergraduate students in India across degree streams.', 'Merit-cum-Means', 7.50, 600000.00, 'Undergraduate', 200000.00, 'INR', '2026-12-15', 'https://www.reliancefoundation.org', 50, 'active', 1),
