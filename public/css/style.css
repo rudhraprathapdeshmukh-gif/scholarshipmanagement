@@ -204,6 +204,32 @@ a:hover {
 .role-pill.student { background-color: #dbeafe; color: #1e40af; }
 .role-pill.admin { background-color: #fef3c7; color: #92400e; }
 
+/* --- Drawer-only items: hidden on desktop --- */
+.nav-drawer-auth,
+.nav-drawer-logout,
+.nav-drawer-user { display: none; }
+
+/* User-badge link inside nav-links (student profile link) */
+.user-badge-link {
+  color: var(--primary) !important;
+  font-weight: 700;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user-badge-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* Mobile Navbar */
 @media (max-width: 768px) {
   .nav-toggle {
@@ -211,9 +237,18 @@ a:hover {
     order: 2;
   }
 
+  .nav-container {
+    flex-wrap: wrap;
+  }
+
   .nav-container nav {
     order: 3;
     width: 100%;
+  }
+
+  /* HIDE desktop nav-user on mobile — items are in the drawer now */
+  .nav-user {
+    display: none !important;
   }
 
   .nav-menu {
@@ -232,17 +267,55 @@ a:hover {
 
   .nav-link {
     width: 100%;
-    padding: 0.65rem 0.75rem;
+    padding: 0.75rem 0.85rem;
     border-radius: var(--radius-sm);
-  }
-
-  .nav-user {
-    order: 2;
-    flex-wrap: wrap;
+    font-size: 0.9rem;
   }
 
   .user-badge {
     font-size: 0.75rem;
+  }
+
+  /* --- Show drawer-only items on mobile --- */
+  .nav-drawer-auth,
+  .nav-drawer-logout,
+  .nav-drawer-user {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 0.5rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 0.25rem;
+  }
+
+  .nav-drawer-btn {
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+    font-size: 0.88rem;
+  }
+
+  .nav-drawer-user-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--bg-subtle);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--secondary);
+    border: 1px solid var(--border-color);
+  }
+
+  /* Student profile badge in drawer */
+  .user-badge-link {
+    width: 100%;
+    border-radius: var(--radius-sm);
+    padding: 0.65rem 0.85rem;
+  }
+  .nav-user-badge-item {
+    width: 100%;
   }
 }
 
@@ -256,11 +329,7 @@ a:hover {
   padding: 1.75rem 1.5rem;
 }
 
-@media (max-width: 768px) {
-  .main-content {
-    padding: 1.25rem 1rem;
-  }
-}
+
 
 /* ======================== VIEWS ======================== */
 
@@ -351,24 +420,7 @@ a:hover {
   flex-wrap: wrap;
 }
 
-@media (max-width: 768px) {
-  .hero-section {
-    padding: 1.75rem 1.25rem;
-  }
-  .hero-title {
-    font-size: 1.4rem;
-  }
-  .hero-description {
-    font-size: 0.88rem;
-  }
-  .hero-cta {
-    flex-direction: column;
-  }
-  .hero-cta .btn {
-    width: 100%;
-    justify-content: center;
-  }
-}
+
 
 /* ======================== STAT CARDS ======================== */
 
@@ -427,14 +479,8 @@ a:hover {
   margin-top: 0.1rem;
 }
 
-@media (max-width: 900px) {
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 480px) {
-  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.65rem; }
-  .stat-card { padding: 0.85rem 1rem; }
-  .stat-info .stat-value { font-size: 1.05rem; }
-}
+
+
 
 /* ======================== SECTION HEADERS ======================== */
 
@@ -459,15 +505,7 @@ a:hover {
   line-height: 1.5;
 }
 
-@media (max-width: 600px) {
-  .section-header {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .section-title {
-    font-size: 1.2rem;
-  }
-}
+
 
 /* ======================== FILTER TOOLBAR ======================== */
 
@@ -530,17 +568,7 @@ a:hover {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-@media (max-width: 600px) {
-  .filter-row {
-    flex-direction: column;
-  }
-  .filter-search-col,
-  .filter-select-col,
-  .filter-input-col {
-    flex: 1 1 100%;
-    min-width: 0;
-  }
-}
+
 
 /* ======================== SCHOLARSHIP CARDS ======================== */
 
@@ -670,14 +698,7 @@ a:hover {
 }
 .card-deadline-text.urgent { color: var(--danger); font-weight: 700; }
 
-@media (max-width: 600px) {
-  .scholarship-grid {
-    grid-template-columns: 1fr;
-  }
-  .scholarship-card {
-    padding: 1rem;
-  }
-}
+
 
 /* ======================== STATUS BADGES ======================== */
 
@@ -753,10 +774,7 @@ a:hover {
 }
 .step-item.active .step-label { color: var(--primary); font-weight: 700; }
 
-@media (max-width: 480px) {
-  .step-label { font-size: 0.65rem; }
-  .step-circle { width: 26px; height: 26px; font-size: 0.65rem; }
-}
+
 
 /* ======================== TABLES ======================== */
 
@@ -861,17 +879,7 @@ a:hover {
   background-color: var(--bg-subtle);
 }
 
-@media (max-width: 600px) {
-  .modal-box {
-    max-width: 95vw;
-    border-radius: var(--radius-md);
-  }
-  .modal-box.modal-lg { max-width: 95vw; }
-  .modal-header { padding: 1rem 1.15rem; }
-  .modal-body { padding: 1.15rem; }
-  .modal-footer { padding: 0.85rem 1.15rem; }
-  .modal-title { font-size: 1rem; }
-}
+
 
 /* ======================== FORMS ======================== */
 
@@ -899,9 +907,7 @@ a:hover {
   min-height: 80px;
 }
 
-@media (max-width: 600px) {
-  .form-grid-2 { grid-template-columns: 1fr; }
-}
+
 
 /* Form Section Heading */
 .form-section-heading {
@@ -926,15 +932,7 @@ a:hover {
   border-top: 1px solid var(--border-color);
 }
 
-@media (max-width: 480px) {
-  .form-actions {
-    flex-direction: column;
-  }
-  .form-actions .btn {
-    width: 100%;
-    justify-content: center;
-  }
-}
+
 
 /* ======================== DEMO BANNER ======================== */
 
@@ -955,12 +953,7 @@ a:hover {
   color: #1e40af;
 }
 
-@media (max-width: 480px) {
-  .demo-banner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
+
 
 /* ======================== ACTION TILES (Admin) ======================== */
 
@@ -1037,11 +1030,7 @@ a:hover {
   box-shadow: var(--shadow-sm);
 }
 
-@media (max-width: 600px) {
-  .card-container {
-    padding: 1.15rem;
-  }
-}
+
 
 /* ======================== TOAST ALERTS ======================== */
 
@@ -1080,17 +1069,7 @@ a:hover {
 .toast-body { flex: 1; font-size: 0.84rem; }
 .toast-title { font-weight: 700; margin-bottom: 0.15rem; }
 
-@media (max-width: 480px) {
-  .toast-container {
-    left: 1rem;
-    right: 1rem;
-    bottom: 1rem;
-  }
-  .toast {
-    min-width: 0;
-    max-width: 100%;
-  }
-}
+
 
 /* ======================== FOOTER ======================== */
 
@@ -1112,13 +1091,7 @@ a:hover {
   gap: 0.75rem;
 }
 
-@media (max-width: 600px) {
-  .footer-container {
-    flex-direction: column;
-    text-align: center;
-    gap: 0.5rem;
-  }
-}
+
 
 /* ======================== VNRVJIET BONAFIDE CERTIFICATE ======================== */
 
@@ -1505,61 +1478,70 @@ a:hover {
   50% { opacity: 0.8; }
 }
 
-/* ======================== MOBILE ACCESSIBILITY & UNCLUTTERING ======================== */
+/* ======================== MOBILE RESPONSIVE – CONSOLIDATED ======================== */
 
 @media (max-width: 768px) {
-  /* Prevent horizontal scroll bleed */
+
+  /* ---- Global ---- */
   body, html {
     overflow-x: hidden;
     width: 100%;
   }
 
-  /* Compact Navbar */
+  /* ---- Compact Navbar ---- */
   .nav-container {
-    padding: 0.6rem 0.85rem;
+    padding: 0.55rem 0.75rem;
+    gap: 0.5rem;
   }
   .brand {
-    font-size: 1rem;
-    gap: 0.4rem;
+    font-size: 0.95rem;
+    gap: 0.35rem;
   }
   .brand .brand-icon {
     width: 28px;
     height: 28px;
     font-size: 0.8rem;
   }
+  .brand .india-pill {
+    display: none;
+  }
   .nav-toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     padding: 0;
+    font-size: 1.15rem;
   }
 
-  /* Main container relaxed padding */
+  /* ---- Main Content ---- */
   .main-content {
-    padding: 1rem 0.75rem 2.5rem 0.75rem;
+    padding: 0.85rem 0.65rem 2rem 0.65rem;
   }
 
-  /* Hero Banner uncluttering */
+  /* ---- Hero Banner ---- */
   .hero-section {
-    padding: 1.5rem 1rem;
+    padding: 1.25rem 0.9rem;
     border-radius: var(--radius-md);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .hero-badge {
+    font-size: 0.7rem;
+    margin-bottom: 0.6rem;
   }
   .hero-title {
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     line-height: 1.3;
   }
   .hero-description {
-    font-size: 0.86rem;
+    font-size: 0.84rem;
     line-height: 1.5;
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
   }
   .hero-cta {
-    display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.45rem;
   }
   .hero-cta .btn {
     width: 100%;
@@ -1567,12 +1549,18 @@ a:hover {
     justify-content: center;
   }
 
-  /* Section headers on mobile */
+  /* ---- Section Headers ---- */
   .section-header {
     flex-direction: column;
-    align-items: stretch;
-    gap: 0.65rem;
-    margin-bottom: 1rem;
+    align-items: stretch !important;
+    gap: 0.5rem;
+    margin-bottom: 0.85rem;
+  }
+  .section-title {
+    font-size: 1.15rem;
+  }
+  .section-desc {
+    font-size: 0.82rem;
   }
   .section-header > div:last-child {
     display: flex;
@@ -1583,68 +1571,83 @@ a:hover {
   .section-header .btn {
     flex: 1 1 auto;
     justify-content: center;
-    min-height: 38px;
+    min-height: 40px;
   }
 
-  /* Metric Stat Cards Grid */
+  /* ---- Stat Cards ---- */
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.65rem;
-    margin-bottom: 1.25rem;
+    gap: 0.55rem;
+    margin-bottom: 1rem;
   }
   .stat-card {
-    padding: 0.75rem 0.85rem;
-    gap: 0.6rem;
+    padding: 0.7rem 0.75rem;
+    gap: 0.5rem;
   }
   .stat-icon {
-    width: 34px;
-    height: 34px;
-    font-size: 0.95rem;
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
   }
   .stat-info .stat-value {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
   .stat-info .stat-label {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
   }
 
-  /* Filter toolbar on mobile */
+  /* ---- Filter Toolbar ---- */
   .filter-toolbar {
-    padding: 0.85rem;
-    margin-bottom: 1rem;
+    padding: 0.75rem;
+    margin-bottom: 0.85rem;
   }
   .filter-row {
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.45rem;
   }
   .filter-search-col,
   .filter-select-col,
   .filter-input-col {
     width: 100%;
     min-width: 0;
+    flex: 1 1 100%;
   }
 
-  /* Scholarship Cards Grid & Spacing */
+  /* ---- Scholarship Cards ---- */
   .scholarship-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 0.85rem;
   }
   .scholarship-card {
-    padding: 1rem;
-  }
-  .card-title {
-    font-size: 0.96rem;
+    padding: 0.9rem;
   }
   .card-top {
     flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .card-title {
+    font-size: 0.94rem;
+  }
+  .card-provider-text {
+    font-size: 0.78rem;
+  }
+  .card-description-text {
+    font-size: 0.8rem;
+    margin-bottom: 0.65rem;
+  }
+  .card-criteria-box {
+    padding: 0.6rem 0.7rem;
+    font-size: 0.78rem;
+    margin-bottom: 0.75rem;
   }
   .card-award-amount {
-    font-size: 1.05rem;
+    font-size: 1rem;
   }
   .card-bottom-actions {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.6rem;
+    gap: 0.5rem;
+    padding-top: 0.65rem;
   }
   .card-bottom-actions .btn {
     width: 100%;
@@ -1652,40 +1655,45 @@ a:hover {
     justify-content: center;
   }
 
-  /* Stepper on Mobile (horizontal scrolling or compact wrap) */
+  /* ---- Status Stepper ---- */
   .status-tracker {
-    display: flex;
-    justify-content: space-between;
     overflow-x: auto;
     padding: 0.5rem 0;
-    margin: 0.75rem 0;
+    margin: 0.65rem 0;
     -webkit-overflow-scrolling: touch;
-    gap: 0.5rem;
+    gap: 0.35rem;
   }
   .status-tracker::before {
-    display: none; /* remove overlapping line on narrow viewports */
+    display: none;
   }
   .step-item {
     flex: 1 1 0;
-    min-width: 60px;
+    min-width: 56px;
   }
   .step-circle {
     width: 24px;
     height: 24px;
-    font-size: 0.68rem;
+    font-size: 0.65rem;
   }
   .step-label {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     white-space: normal;
     text-align: center;
     line-height: 1.2;
-    margin-top: 0.25rem;
+    margin-top: 0.2rem;
   }
 
-  /* Modals on Mobile */
+  /* ---- Tables ---- */
+  .data-table th,
+  .data-table td {
+    padding: 0.55rem 0.65rem;
+    font-size: 0.8rem;
+  }
+
+  /* ---- Modals (Bottom-sheet style) ---- */
   .modal-overlay {
-    padding: 0.5rem;
-    align-items: flex-end; /* Sheet style on mobile */
+    padding: 0;
+    align-items: flex-end;
   }
   .modal-box,
   .modal-box.modal-lg {
@@ -1696,16 +1704,19 @@ a:hover {
     margin: 0;
   }
   .modal-header {
-    padding: 0.85rem 1rem;
+    padding: 0.75rem 0.9rem;
+  }
+  .modal-title {
+    font-size: 1rem;
   }
   .modal-body {
-    padding: 1rem;
-    max-height: calc(92vh - 120px);
+    padding: 0.9rem;
+    max-height: calc(92vh - 115px);
   }
   .modal-footer {
-    padding: 0.75rem 1rem;
+    padding: 0.7rem 0.9rem;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.45rem;
   }
   .modal-footer .btn {
     width: 100%;
@@ -1713,37 +1724,119 @@ a:hover {
     justify-content: center;
   }
 
-  /* Bonafide Sheet on Mobile */
+  /* ---- Forms ---- */
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+  .form-group {
+    margin-bottom: 0.85rem;
+  }
+  .form-input, .form-select, .form-textarea {
+    min-height: 44px;
+    font-size: 16px; /* Prevents iOS auto-zoom */
+    padding: 0.6rem 0.75rem;
+  }
+  .form-label {
+    font-size: 0.82rem;
+    margin-bottom: 0.3rem;
+  }
+  .form-actions {
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .form-actions .btn {
+    width: 100%;
+    min-height: 44px;
+    justify-content: center;
+  }
+  .form-section-heading {
+    font-size: 0.95rem;
+    margin: 1rem 0 0.75rem 0;
+  }
+
+  /* ---- Cards / Containers ---- */
+  .card-container {
+    padding: 1rem;
+  }
+  .action-tiles-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+  .action-tile {
+    padding: 1.1rem;
+  }
+
+  /* ---- Demo Banner ---- */
+  .demo-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0.75rem 0.85rem;
+  }
+
+  /* ---- Audit Log ---- */
+  .audit-log-box {
+    padding: 1rem;
+  }
+  .audit-log-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* ---- Bonafide Certificate ---- */
   .bonafide-sheet {
-    padding: 1.15rem 0.9rem;
+    padding: 1rem 0.8rem;
   }
   .bonafide-sheet::before {
-    font-size: 4rem;
+    font-size: 3.5rem;
   }
   .bonafide-header {
     flex-direction: column;
     text-align: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
   .bonafide-emblem {
-    width: 48px;
-    height: 48px;
-    font-size: 1.5rem;
+    width: 44px;
+    height: 44px;
+    font-size: 1.35rem;
     margin: 0 auto;
   }
   .bonafide-title-block h2 {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
   .bonafide-meta-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.35rem;
+    gap: 0.3rem;
+    font-size: 0.78rem;
+  }
+  .bonafide-doc-title h3 {
+    font-size: 1.05rem;
+  }
+  .bonafide-body-text {
+    font-size: 0.84rem;
+    line-height: 1.6;
+  }
+  .bonafide-scheme-highlight {
+    grid-template-columns: 1fr;
+    padding: 0.7rem 0.85rem;
   }
   .bonafide-footer-row {
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 0.85rem;
     text-align: center;
+  }
+  .bonafide-seal-box {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .seal-circle {
+    width: 70px;
+    height: 70px;
+    font-size: 0.5rem;
   }
   .bonafide-digisign-box {
     text-align: center;
@@ -1751,32 +1844,24 @@ a:hover {
     width: 100%;
   }
 
-  /* Form grids on mobile */
-  .form-grid-2 {
-    grid-template-columns: 1fr;
-    gap: 0.65rem;
-  }
-  .form-input, .form-select, .form-textarea {
-    min-height: 44px; /* Touch target minimum */
-    font-size: 16px; /* Prevents auto-zoom in iOS Safari */
-  }
-
-  /* Touch-friendly Pill Groups */
+  /* ---- Pill Groups (touch-friendly) ---- */
   .pill-group {
     width: 100%;
     display: flex;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 3px;
   }
   .pill-btn {
     flex: 1 1 auto;
     text-align: center;
     justify-content: center;
-    padding: 0.45rem 0.6rem;
-    font-size: 0.78rem;
+    padding: 0.45rem 0.55rem;
+    font-size: 0.76rem;
+    min-height: 36px;
   }
 
-  /* Table Toolbars */
+  /* ---- Table Toolbar ---- */
   .table-toolbar {
     flex-direction: column;
     align-items: stretch;
@@ -1787,15 +1872,89 @@ a:hover {
     width: 100%;
     min-width: 100%;
   }
+
+  /* ---- Toast ---- */
+  .toast-container {
+    left: 0.65rem;
+    right: 0.65rem;
+    bottom: 0.65rem;
+  }
+  .toast {
+    min-width: 0;
+    max-width: 100%;
+    padding: 0.7rem 0.85rem;
+    font-size: 0.82rem;
+  }
+
+  /* ---- Footer ---- */
+  .footer {
+    padding: 1rem;
+  }
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+  }
+
+  /* ---- Profile Form ---- */
+  .profile-form-container {
+    max-width: 100%;
+  }
+
+  /* ---- Badges ---- */
+  .badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  /* ---- Buttons touch target ---- */
+  .btn {
+    min-height: 40px;
+    padding: 0.5rem 0.85rem;
+  }
+  .btn-sm {
+    min-height: 36px;
+    padding: 0.4rem 0.65rem;
+  }
 }
 
-/* Extra small devices (iPhone SE, 320px - 380px) */
+/* ---- Extra-small devices (iPhone SE, 320px-380px) ---- */
 @media (max-width: 380px) {
   .stats-grid {
     grid-template-columns: 1fr;
   }
   .brand {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+  }
+  .brand .brand-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 0.7rem;
+  }
+  .hero-title {
+    font-size: 1.1rem;
+  }
+  .hero-description {
+    font-size: 0.8rem;
+  }
+  .nav-link {
+    font-size: 0.84rem;
+    padding: 0.65rem 0.7rem;
+  }
+  .stat-card {
+    padding: 0.6rem 0.65rem;
+  }
+  .stat-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+  .scholarship-card {
+    padding: 0.75rem;
+  }
+  .modal-body {
+    padding: 0.75rem;
   }
 }
 

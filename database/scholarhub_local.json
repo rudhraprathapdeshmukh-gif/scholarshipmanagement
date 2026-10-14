@@ -278,7 +278,7 @@
       "currency": "INR",
       "deadline": "2026-12-20",
       "application_url": "https://ongcscholar.org",
-      "slots_available": 80,
+      "slots_available": 79,
       "status": "active",
       "created_by": 1,
       "created_at": "2026-06-01"
@@ -314,6 +314,18 @@
       "admin_feedback": "",
       "reviewed_by": 1,
       "reviewed_at": "2026-10-13 15:49:52"
+    },
+    {
+      "id": 2,
+      "student_id": 7,
+      "scholarship_id": 7,
+      "applied_date": "2026-10-14 06:41:06",
+      "status": "awarded",
+      "official_ref_number": "26075A6703",
+      "student_notes": "Applied through ScholarHub portal.",
+      "admin_feedback": "Institutional clearance granted by VNRVJIET Scholarship Cell. Digitally signed Bonafide Certificate issued to student.",
+      "reviewed_by": 1,
+      "reviewed_at": "2026-10-14 06:41:38"
     }
   ],
   "activity_logs": [
@@ -379,6 +391,27 @@
       "action": "STUDENT_REGISTER",
       "details": "New student registered: Rud (r@gmail.com)",
       "created_at": "2026-10-13 16:16:33"
+    },
+    {
+      "id": 10,
+      "user_id": 7,
+      "action": "APPLICATION_SUBMISSION",
+      "details": "Student applied for \"ONGC Foundation Scholarship for SC/ST/OBC Students\" (Ref #26075A6703)",
+      "created_at": "2026-10-14 06:41:06"
+    },
+    {
+      "id": 11,
+      "user_id": 1,
+      "action": "USER_LOGIN",
+      "details": "User VNRVJIET Scholarship Cell Officer (admin) logged in successfully.",
+      "created_at": "2026-10-14 06:41:21"
+    },
+    {
+      "id": 12,
+      "user_id": 1,
+      "action": "APPLICATION_REVIEWED",
+      "details": "Admin updated Application #2 to status \"awarded\" with feedback.",
+      "created_at": "2026-10-14 06:41:38"
     }
   ]
 }
